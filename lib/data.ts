@@ -1,4 +1,4 @@
-import { Budget } from "@/types";
+import { Budget } from "@/lib/types";
 
 const budgets: Budget[] = [
   {
