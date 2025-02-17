@@ -2,9 +2,16 @@
 
 import { useUser } from "@clerk/nextjs";
 import Wrapper from "../components/Wrapper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
-import { addBugets } from "./actions";
+import { addBugets, getBudgetsByUser } from "./actions";
+import Notifications from "../components/Notifications";
+import { Budget } from "@/lib/types";
+import Link from "next/link";
+import BudgetsItem from "../components/BudgetsItem";
+import { Landmark } from "lucide-react";
+import { get } from "http";
+
 
 const Page = () => {
   const { user } = useUser();
@@ -12,11 +19,17 @@ const Page = () => {
   const [budgetAmount, setBudgetAmount] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState("");
+  const [notification, setNotification] = useState('');
+  const [bugdets, setBudgets] = useState<Budget[]>([]);
 
   const handleEmojiSelect = (emojiObject: { emoji: string }) => {
     setSelectedEmoji(emojiObject.emoji);
     setShowEmojiPicker(false);
   };
+
+  const closeNotification = () => {
+    setNotification('');
+  }
 
   const handleAddBudgets = async () => {
     try {
@@ -30,22 +43,52 @@ const Page = () => {
       amount,
       selectedEmoji 
       )
-
+      
+      getAllBudgets();
       const modal = document.getElementById("my_modal_3") as HTMLDialogElement
        if (modal) {
          modal.close();
        }
+
+       setNotification('neuer Budjet wurde erfolgreich hinzugefügt');
+        setBudgetName('');
+        setBudgetAmount('');
+        setSelectedEmoji('');
+        setShowEmojiPicker(false);
       
-    } catch {
-      
+    } catch(error) {
+      setNotification(`Fehler beim Hinzufügen des Budjets: ${error}`);   
     }
   }
+
+  const getAllBudgets = async () => {
+    if(user?.primaryEmailAddress?.emailAddress){
+      try {
+        
+        const userBudgets = await getBudgetsByUser(user?.primaryEmailAddress?.emailAddress)
+        setBudgets(userBudgets)
+      } catch (error) {
+        setNotification(`Fehler beim Abrufen der Budjets: ${error}`)
+      }
+    }
+  }
+
+  useEffect(() => {
+    getAllBudgets()    
+  }, [user?.primaryEmailAddress?.emailAddress])
+  
+  console.log(bugdets);
+  
+  
 
   return (
     <div>
       <Wrapper>
+        {notification && (
+          <Notifications message={notification} type={notification.includes('Fehler') ? 'error' : 'success'} onclose={closeNotification}  />
+        )}
         <button
-          className="btn"
+          className="btn mb-4"
           onClick={() =>
             (
               document.getElementById("my_modal_3") as HTMLDialogElement
@@ -53,6 +96,7 @@ const Page = () => {
           }
         >
           neuer Budjet
+          <Landmark className="w-4" />
         </button>
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box">
@@ -98,6 +142,14 @@ const Page = () => {
             </div>
           </div>
         </dialog>
+
+        <ul className="grid md:grid-cols-3 gap-4">
+          {bugdets.map((budget) => (
+            <Link href={"/budjets"} key={budget.id} className="card">
+             <BudgetsItem budget={budget} enableHover={1} />
+            </Link>
+          ))}
+        </ul>
       </Wrapper>
     </div>
   );
