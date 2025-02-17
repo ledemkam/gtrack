@@ -1,21 +1,106 @@
-"use client"
+"use client";
 
-import Wrapper from "../components/Wrapper"
+import { useUser } from "@clerk/nextjs";
+import Wrapper from "../components/Wrapper";
+import { useState } from "react";
+import EmojiPicker from "emoji-picker-react";
+import { addBugets } from "./actions";
 
+const Page = () => {
+  const { user } = useUser();
+  const [budgetName, setBudgetName] = useState("");
+  const [budgetAmount, setBudgetAmount] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
 
+  const handleEmojiSelect = (emojiObject: { emoji: string }) => {
+    setSelectedEmoji(emojiObject.emoji);
+    setShowEmojiPicker(false);
+  };
 
+  const handleAddBudgets = async () => {
+    try {
+      const amount = parseFloat(budgetAmount);
+      if (isNaN(amount) || amount <= 0) {
+        throw new Error("Der Betrag muss eine positive Zahl sein");
+      }
 
-const page = () => {
+      await addBugets( user?.primaryEmailAddress?.emailAddress as string,
+      budgetName,
+      amount,
+      selectedEmoji 
+      )
 
-  
+      const modal = document.getElementById("my_modal_3") as HTMLDialogElement
+       if (modal) {
+         modal.close();
+       }
+      
+    } catch {
+      
+    }
+  }
 
   return (
     <div>
-        <Wrapper>
-            div
-        </Wrapper>
-    </div>
-  )
-}
+      <Wrapper>
+        <button
+          className="btn"
+          onClick={() =>
+            (
+              document.getElementById("my_modal_3") as HTMLDialogElement
+            ).showModal()
+          }
+        >
+          neuer Budjet
+        </button>
+        <dialog id="my_modal_3" className="modal">
+          <div className="modal-box">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+            <h3 className="font-bold text-lg">Budjet erstellen</h3>
+            <p className="py-4">
+              ermöglicht es Ihnen, Ihre Ausgaben zu kontrollieren
+            </p>
+            <div className="w-full flex flex-col">
+              <input
+                type="text"
+                value={budgetName}
+                placeholder="Name des bugets"
+                onChange={(e) => setBudgetName(e.target.value)}
+                className="input input-bordered mb-3"
+                required
+              />
 
-export default page
+              <input
+                type="text"
+                value={budgetAmount}
+                placeholder="Beitrag in €"
+                onChange={(e) => setBudgetAmount(e.target.value)}
+                className="input input-bordered mb-3"
+                required
+              />
+              <button
+                className="btn mb-3"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              >
+                {selectedEmoji || "ein emoji wählen 🫵"}
+              </button>
+              {showEmojiPicker && (
+                <div className="flex justify-center items-center my-4">
+                  <EmojiPicker onEmojiClick={handleEmojiSelect} />
+                </div>
+              )}
+              <button className="btn" onClick={handleAddBudgets}>Budjet hinzufügen</button>
+            </div>
+          </div>
+        </dialog>
+      </Wrapper>
+    </div>
+  );
+};
+
+export default Page;
