@@ -1,6 +1,6 @@
 import { Budget } from "@/lib/types";
 
-const budgets: Budget[] = [
+export const bugdets: Budget[] = [
   {
     id: "1",
     createdAt: new Date("2023-01-10"),
@@ -129,4 +129,4 @@ const budgets: Budget[] = [
   },
 ];
 
-export default budgets;
+
