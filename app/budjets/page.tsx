@@ -10,7 +10,6 @@ import { Budget } from "@/lib/types";
 import Link from "next/link";
 import BudgetsItem from "../components/BudgetsItem";
 import { Landmark } from "lucide-react";
-import { get } from "http";
 
 
 const Page = () => {
