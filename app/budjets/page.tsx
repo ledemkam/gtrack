@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { addBugets, getBudgetsByUser } from "./actions";
 import Notifications from "../components/Notifications";
-import { Budget } from "@prisma/client";
+import { Budget } from "@/lib/types";
 import Link from "next/link";
+import BudgetsItem from "../components/BudgetsItem";
+import { Landmark } from "lucide-react";
+import { get } from "http";
 
 
 const Page = () => {
@@ -40,7 +43,8 @@ const Page = () => {
       amount,
       selectedEmoji 
       )
-
+      
+      getAllBudgets();
       const modal = document.getElementById("my_modal_3") as HTMLDialogElement
        if (modal) {
          modal.close();
@@ -84,7 +88,7 @@ const Page = () => {
           <Notifications message={notification} type={notification.includes('Fehler') ? 'error' : 'success'} onclose={closeNotification}  />
         )}
         <button
-          className="btn"
+          className="btn mb-4"
           onClick={() =>
             (
               document.getElementById("my_modal_3") as HTMLDialogElement
@@ -92,6 +96,7 @@ const Page = () => {
           }
         >
           neuer Budjet
+          <Landmark className="w-4" />
         </button>
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box">
@@ -141,7 +146,7 @@ const Page = () => {
         <ul className="grid md:grid-cols-3 gap-4">
           {bugdets.map((budget) => (
             <Link href={"/budjets"} key={budget.id} className="card">
-             {budget.emoji} {budget.name} - {budget.amount} €
+             <BudgetsItem budget={budget} enableHover={1} />
             </Link>
           ))}
         </ul>
