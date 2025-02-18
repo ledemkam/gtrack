@@ -144,7 +144,7 @@ const Page = () => {
 
         <ul className="grid md:grid-cols-3 gap-4">
           {bugdets.map((budget) => (
-            <Link href={"/budjets"} key={budget.id} className="card">
+            <Link href={`/budjets/${budget.id}`} key={budget.id} className="card">
              <BudgetsItem budget={budget} enableHover={1} />
             </Link>
           ))}
