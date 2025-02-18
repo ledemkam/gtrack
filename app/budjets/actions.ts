@@ -117,3 +117,44 @@ export async function addTransactionToBugfet(
         throw error
     }
 }
+
+export const deleteBudget = async (budgetId: string) => {
+    try {
+        await prisma.transaction.deleteMany({
+            where: { budgetId }
+        })
+
+        await prisma.budget.delete({
+            where: {
+                id: budgetId
+            }
+        })
+    } catch (error) {
+        console.error('Fehler beim Löschen des Budgets und der zugehörigen Transaktionen: ', error);
+        throw error;
+    }
+}
+
+export async function deleteTransaction(transactionId: string) {
+    try {
+        console.log(" id de la transact", transactionId)
+        const transaction = await prisma.transaction.findUnique({
+            where: {
+                id: transactionId
+            }
+        })
+
+        if (!transaction) {
+            throw new Error('keine transaktion gefunden.');
+        }
+
+        await prisma.transaction.delete({
+            where: {
+                id: transactionId,
+            },
+        });
+    } catch (error) {
+        console.error('Fehler beim Löschen der Transaktion:', error);
+        throw error;
+    }
+}
