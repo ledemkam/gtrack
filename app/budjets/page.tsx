@@ -19,7 +19,7 @@ const Page = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState("");
   const [notification, setNotification] = useState('');
-  const [bugdets, setBudgets] = useState<Budget[]>([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
 
   const handleEmojiSelect = (emojiObject: { emoji: string }) => {
     setSelectedEmoji(emojiObject.emoji);
@@ -76,7 +76,7 @@ const Page = () => {
     getAllBudgets()    
   }, [user?.primaryEmailAddress?.emailAddress])
   
-  console.log(bugdets);
+  console.log(budgets);
   
   
 
@@ -143,7 +143,7 @@ const Page = () => {
         </dialog>
 
         <ul className="grid md:grid-cols-3 gap-4">
-          {bugdets.map((budget) => (
+          {budgets.map((budget) => (
             <Link href={`/budjets/${budget.id}`} key={budget.id} className="card">
              <BudgetsItem budget={budget} enableHover={1} />
             </Link>
