@@ -4,9 +4,9 @@ import { Budget } from "@/lib/types";
 import BudgetsItem from "@/app/components/BudgetsItem";
 import {
   addTransactionToBugfet,
-  deleteBudget,
   deleteTransaction,
   getTransactionsByBudgetId,
+  deleteBudget,
 } from "../actions";
 import Wrapper from "@/app/components/Wrapper";
 import { Send, Trash } from "lucide-react";
