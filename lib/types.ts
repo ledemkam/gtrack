@@ -17,3 +17,9 @@ export interface Transaction {
     budgetName?: string;
     budgetId?: string | null;
 }
+
+export interface BudgetsData  {
+    budgetName: string;
+    totalBudgetAmount: number;
+    getTotalAmount: number;
+}
