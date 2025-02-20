@@ -1,7 +1,8 @@
 import Link from "next/link";
-import Navbar from "./components/Navbar";
-import BudgetsItem from "./components/BudgetsItem";
+
 import  {bugdets}  from "./data";
+import BudgetsItem from "./components/shared/BudgetsItem";
+import Navbar from "./components/layout/Navbar";
 
 
 export default function Home() {

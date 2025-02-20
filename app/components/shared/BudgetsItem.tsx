@@ -1,8 +1,6 @@
 import { Budget } from "@/lib/types";
 import { ReactElement } from "react";
-import BudgetHeader from "./BudgetHeader";
-import BudgetDetails from "./BudgetDetails";
-import BudgetProgress from "./BudgetProgress";
+
 import {
   getHoverClass,
   getProgress,
@@ -10,6 +8,9 @@ import {
   getTotalAmount,
   getTransactionCount,
 } from "@/lib/utils";
+import BudgetHeader from "./BudgetHeader";
+import BudgetDetails from "./BudgetDetails";
+import BudgetProgress from "./BudgetProgress";
 
 interface BudgetsItemProps {
   budget: Budget;

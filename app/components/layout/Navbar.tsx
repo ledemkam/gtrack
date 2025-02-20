@@ -1,8 +1,8 @@
 "use client";
+import { checkAndAddUser } from "@/app/actions";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { useEffect } from "react";
-import { checkAndAddUser } from "../actions";
 
 const Navbar = () => {
   const { isLoaded, isSignedIn, user } = useUser();

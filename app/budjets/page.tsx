@@ -1,15 +1,15 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../components/layout/Wrapper";
 import { useEffect, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { addBugets, getBudgetsByUser } from "./actions";
-import Notifications from "../components/Notifications";
+import Notifications from "../components/ui/Notifications";
 import { Budget } from "@/lib/types";
 import Link from "next/link";
-import BudgetsItem from "../components/BudgetsItem";
 import { Landmark } from "lucide-react";
+import BudgetsItem from "../components/shared/BudgetsItem";
 
 
 const Page = () => {

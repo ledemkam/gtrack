@@ -1,6 +1,6 @@
 "use client"
 import { useUser } from "@clerk/nextjs";
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../components/layout/Wrapper";
 import { useEffect, useState } from "react";
 import {
   getLastBudgets,
@@ -10,13 +10,13 @@ import {
   getTotalTransactionCount,
   getUserBudgetData,
 } from "./actions";
-import BudgetsItem from "../components/BudgetsItem";
 import Link from "next/link";
 import { CircleDollarSign, Landmark, PiggyBank } from "lucide-react";
 import { Budget, BudgetsData, Transaction } from "@/lib/types";
-import SummaryCard from "../components/SummaryCard";
-import StatisticsChart from "../components/StatisticsChart";
-import TransactionList from "../components/TransactionList";
+import SummaryCard from "../components/shared/SummaryCard";
+import StatisticsChart from "../components/ui/StatisticsChart";
+import TransactionList from "../components/shared/TransactionList";
+import BudgetsItem from "../components/shared/BudgetsItem";
 
 const Page = () => {
   const { user } = useUser();

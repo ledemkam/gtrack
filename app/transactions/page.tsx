@@ -1,10 +1,10 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../components/layout/Wrapper";
 import { useEffect, useState } from "react";
 import { Transaction } from "@/lib/types";
 import { getTransactionsByEmailAndPeriod } from "./actions";
-import TransactionItem from "../components/TransactionItem";
+import TransactionItem from "../components/shared/TransactionItem";
 
 const Page = () => {
   const { user } = useUser();

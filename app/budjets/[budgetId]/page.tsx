@@ -1,17 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Budget } from "@/lib/types";
-import BudgetsItem from "@/app/components/BudgetsItem";
 import {
   addTransactionToBugfet,
   deleteTransaction,
   getTransactionsByBudgetId,
   deleteBudget,
 } from "../actions";
-import Wrapper from "@/app/components/Wrapper";
+import Wrapper from "@/app/components/layout/Wrapper";
 import { Send, Trash } from "lucide-react";
 import { redirect } from "next/navigation";
-import Notifications from "@/app/components/Notifications";
+import Notifications from "@/app/components/ui/Notifications";
+import BudgetsItem from "@/app/components/shared/BudgetsItem";
 
 const Page = ({ params }: { params: Promise<{ budgetId: string }> }) => {
   const [budgetId, setBudgetId] = useState("");
