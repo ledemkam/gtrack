@@ -17,8 +17,8 @@ export default function Home() {
               <br /> über Ihre Finanzen
             </h1>
             <p className="py-6 text-gray text-center">
-              suiver z vos bugget et depenseda <br /> en toute simplicite avec
-              notre application intuitive !
+                          Verfolgen Sie Ihr Budget und Ihre Ausgaben <br/>ganz einfach mit unserer intuitiven Anwendung!
+
             </p>
             <div className="flex justify-center gap-2 items-center">
               <Link
